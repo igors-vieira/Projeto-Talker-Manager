@@ -26,4 +26,8 @@ talkerR.get('/:id', async (req, res) => {
   res.status(200).json(findId);
 });
 
+// talkerR.post('/', (req, res) => {
+//   res.
+// });
+
 module.exports = talkerR;

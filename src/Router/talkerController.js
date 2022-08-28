@@ -14,6 +14,17 @@ talkerR.get('/', async (_req, res) => {
   res.status(200).json(talkersParse);
 });
 
+talkerR.get('/search', validateToken, async (req, res) => {
+  const { q } = req.query;
+  const talkersParse = await jeisao();
+  const searchTalkers = talkersParse.filter((t) => t.name.includes(q));
+
+  if (q === '') {
+    return res.status(200).json(talkersParse);
+  }
+  res.status(200).json(searchTalkers);
+});
+
 talkerR.get('/:id', async (req, res) => {
   const talkersParse = await jeisao();
 

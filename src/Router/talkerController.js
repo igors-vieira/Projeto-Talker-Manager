@@ -53,10 +53,22 @@ validateName, validateAge, validateTalk, validateRate, async (req, res) => {
     const up = { id, ...req.body };
     talkersParse.splice(i, 1, up);
     await fs.writeFile(join(__dirname, '../talker.json'), JSON.stringify(talkersParse));
-    res.status(200).json(up);
-  } else {
-    res.sendStatus(400);
+    return res.status(200).json(up);
   }
+  res.status(400).json({ message: 'id da pessoa não encontrado' });
+});
+
+talkerR.delete('/:id', validateToken, async (req, res) => {
+  const id = Number(req.params.id);
+  const talkersParse = await jeisao();
+
+  const delTalker = talkersParse.filter((talker) => talker.id !== id);
+
+  if (!talkersParse.some((t) => t.id === id)) {
+    return res.sendStatus(401);
+  }
+  await fs.writeFile(join(__dirname, '../talker.json'), JSON.stringify(delTalker));
+  res.sendStatus(204);
 });
 
 module.exports = talkerR;

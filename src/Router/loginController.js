@@ -6,7 +6,7 @@ const tokenJs = require('../token');
 const loginR = Router();
 
 loginR.post('/', validateEmail, validatePass, (_req, res) => {
-  res.status(201).json({ token: tokenJs() });
+  res.status(200).json({ token: tokenJs() });
 });
 
 module.exports = loginR;
